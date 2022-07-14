@@ -1,0 +1,14 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: io_header
+# key: header
+# binding: direct-keybinding
+# --
+#include <iostream>
+using std::cin;
+using std::cout;
+using namespace std;
+
+
+int main() {
+
+}

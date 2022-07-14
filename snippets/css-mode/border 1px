@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: border 1px
+# key: b1
+# --
+border: 1px solid $0;

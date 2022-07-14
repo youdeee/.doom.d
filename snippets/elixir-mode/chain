@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: chain
+# key: c
+# --
+|> $0

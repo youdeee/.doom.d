@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: pry
+# key: p
+# --
+require IEx; IEx.pry

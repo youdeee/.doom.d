@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: locale
+# key: l
+# --
+<%= t("$0") %>

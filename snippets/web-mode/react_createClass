@@ -1,0 +1,12 @@
+# key: re
+# name: react_createClass
+# --
+var ${1:$$(upcase-initials yas-text)}${2:$$(upcase-initials yas-text)} = React.createClass({
+  render: function() {
+    return (
+      <div className="${1:$(downcase yas-text)}$2">
+        $0
+      </div>
+    );
+  }
+});

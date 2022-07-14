@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: ctp_equal_tag
+# key: =
+# binding: direct-keybinding
+# --
+<?= $0 ?>

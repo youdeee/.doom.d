@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: localization
+# key: l
+# --
+AppLocalizations.of(context)!

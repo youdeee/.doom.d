@@ -1,0 +1,11 @@
+# key: sys
+# name: system_helper
+# --
+# frozen_string_literal: true
+
+require "rails_helper"
+
+RSpec.feature "System: `(mapconcat 'capitalize (split-string (s-chop-suffix "_spec.rb" (file-name-nondirectory buffer-file-name)) "_") " ")`", type: :system do
+  scenario "$0"
+end
+ 

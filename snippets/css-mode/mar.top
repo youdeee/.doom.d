@@ -1,0 +1,5 @@
+#contributor : rejeep <johan.rejeep@gmail.com>
+# key: mt
+#name : margin-top: ...
+# --
+margin-top: $0;

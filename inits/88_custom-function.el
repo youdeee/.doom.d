@@ -1,0 +1,17 @@
+;; (defun kill-region-or-word (kill-region &rest args)
+;;   (cond ((and (called-interactively-p 'interactive) transient-mark-mode (not mark-active))
+;;          ;;(backward-word 1)
+;;          ;;(kill-word 1)
+;;          ;;(er/expand-region 1)
+;;          ;;(apply kill-region args)
+;;          (kill-symbol))
+;;         (t
+;;          (apply kill-region args))))
+;; (advice-add 'kill-region :around 'kill-region-or-word)
+
+;; (defun replace-symbol-from-kill-ring ()
+;;   (interactive)
+;;   (kill-symbol)
+;;   ;;(let ((copied (cadr kill-ring)))
+;;   ;;    (kill-new copied)
+;;   (insert (cadr kill-ring)))

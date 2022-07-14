@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: php_begin
+# key: p
+# binding: direct-keybinding
+# --
+<?php $0 ?>

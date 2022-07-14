@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: i18n_t
+# key: t
+# binding: direct-keybinding
+# --
+<%= t("$0") %>

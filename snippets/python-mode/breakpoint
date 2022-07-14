@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: breakpoint
+# key: c
+# binding: direct-keybinding
+# --
+code.interact(local=locals())

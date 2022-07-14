@@ -1,0 +1,17 @@
+;; (require 'migemo)
+;; (setq migemo-command "cmigemo")
+;; (setq migemo-options '("-q" "--emacs"))
+;; (setq migemo-dictionary "/usr/local/Cellar/cmigemo/HEAD-5c014a8/share/migemo/utf-8/migemo-dict")
+;; (setq migemo-user-dictionary nil)
+;; (setq migemo-regex-dictionary nil)
+;; (setq migemo-coding-system 'utf-8-unix)
+;; (migemo-init)
+
+(setq org-directory "~/Dropbox/junk/org/")
+(setq org-agenda-files (list org-directory))
+
+;; (setq lsp-dart-sdk-dir "~/flutter/bin/cache/dart-sdk/")
+;; (setq mc/list-file "~/.emacs.d/.cache/.mc-lists.el")
+;; (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/.cache/undotree")))
+;; (setq undohist-directory "~/.emacs.d/.cache/undohist")
+(setq helm-ag-use-agignore t)

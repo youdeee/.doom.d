@@ -1,0 +1,4 @@
+# key: js
+# name: json
+# --
+\`json:"$1"\`$0
