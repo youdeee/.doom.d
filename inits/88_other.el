@@ -225,3 +225,21 @@
  '(hl-line ((t (:underline "SteelBlue4"))))
  '(doom-modeline-buffer-modified ((t (:background "#da1001"))))
  )
+
+(setq hl-todo-keyword-faces
+  '(("HOLD" . "#d0bf8f")
+    ("TODO" . "#cc9393")
+    ("NEXT" . "#dca3a3")
+    ("THEM" . "#dc8cc3")
+    ("PROG" . "#7cb8bb")
+    ("OKAY" . "#7cb8bb")
+    ("DONT" . "#5f7f5f")
+    ("FAIL" . "#8c5353")
+    ("DONE" . "#afd8af")
+    ("FIXME" . "#cc9393")
+    ("XXX"   . "#cc9393")
+    ("XXXX"  . "#cc9393")
+    ("???"   . "#cc9393")))
+(global-hl-todo-mode 1)
+
+(global-origami-mode 1)

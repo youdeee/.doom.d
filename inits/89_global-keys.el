@@ -27,15 +27,18 @@
 (bind-key "s-k" 'kill-*-buffer)
 ;;(bind-key "C-x a k" 'kill-all-buffer)
 (bind-key "s-z" 'split-window-3)
-(bind-key "C-a" 'goto-line-beginning-or-indent)
+(bind-key* "C-a" 'goto-line-beginning-or-indent)
+(bind-key* "C-e" 'end-of-line)
 (bind-key "M-t" 'custom-transpose-char)
 ;;(bind-key "C-1" 'replace-symbol-from-kill-ring)
 ;; (bind-key "C-o k" 'replace-forward-from-kill-ring)
 ;; (bind-key "C-o ," 'replace-backward-from-kill-ring)
 (bind-key "s-w" 'window-resizer)
+(bind-key* "s-q" 'window-resizer) ;; s-w押すときに間違って押してc-x c-cで強制終了することがあるのでとりあえず割り当ててる。割り当てたいコマンドできたら何かに当てたい
 (bind-key "s-s" 'save-buffer-without-hook)
 (bind-key "C-o =" 'indent-and-clean-buffer)
 (bind-key "C-M-;" 'copy-region-and-comment-out)
+(bind-key* "M-t" 'insert-timestamp)
 
 ;; defaults
 (bind-key* "C-h" 'delete-backward-char)
@@ -46,7 +49,8 @@
 ;;(bind-key "C-x 5 o" 'transpose-words)
 (bind-key "C-x t" 'other-frame)
 ;;(bind-key "s-u" 'browse-url-of-file)
-(bind-key "M-SPC" 'delete-trailing-whitespace)
+;; (bind-key "M-SPC" 'delete-trailing-whitespace)
+(bind-key "M-SPC" 'linum-mode)
 ;;(bind-key "s-f" 'auto-fill-mode)
 (bind-key "s-f" 'toggle-truncate-lines)
 (bind-key "C-x m" 'kmacro-end-and-call-macro)
@@ -86,6 +90,7 @@
 (bind-keys :map isearch-mode-map
            ("C-h" . isearch-del-char))
 (bind-key* "s-v" 'describe-variable)
+(bind-key* "C-?" 'undo-fu-only-redo)
 
 ;; helm
 (require 'helm)
@@ -97,6 +102,7 @@
 (bind-key* "C-o a" 'helm-ag)
 ;; (bind-key* "M-o" (if (< 1000000 (buffer-size)) 'helm-occur 'helm-swoop))
 (bind-key* "M-o" 'helm-occur)
+(bind-key* "M-O" 'helm-ag-buffers)
 ;; (bind-key* "C-M-o" 'helm-multi-swoop-all)
 (bind-key "C-o C-a" 'helm-projectile-ag) ;; helm-multi-swoop-projectile
 ;; (bind-key "C-x b" 'helm-do-ag-buffers)
@@ -161,7 +167,10 @@
 (bind-key* "C-;" 'avy-goto-word-1)
 ;; (bind-key* "C-;" 'avy-goto-char)
 (bind-key* "C-:" 'avy-goto-char-2)
-(bind-key* "C-'" 'avy-goto-line)
+(bind-key* "C-'" 'switch-window)
+(bind-key* "C-\"" 'avy-goto-line)
+(bind-key* "C-o C-;" 'avy-goto-line-below)
+(bind-key* "C-o ;" 'avy-goto-line-above)
 (bind-key* "C-x C-z" 'open-dropbox-junk)
 ;; (bind-key* "C-x C-a" 'open-0sec-memo)
 
@@ -171,8 +180,8 @@
 ;; ;;(bind-key "M-." 'find-tag)
 ;; ;;(bind-key "C-M-." 'helm-etags-select)
 (bind-key "M-w" 'easy-kill)
-(bind-key "M-/" 'hippie-expand)
-;; (bind-key "C-x 1" 'zoom-window-zoom)
+(bind-key* "M-/" 'hippie-expand)
+(bind-key "C-x 1" 'zoom-window-zoom)
 ;; (bind-key "C-x C-1" 'delete-other-windows)
 ;; (if (require 'switch-window nil 'noerror)
 ;;     (bind-key* "M-T" 'switch-window))
@@ -187,8 +196,8 @@
 ;; ;; (bind-keys :map ac-menu-map
 ;; ;;            ("C-n" . ac-next)
 ;; ;;            ("C-p" . ac-previous))
-;; ;; (bind-keys :map web-mode-map
-;; ;;            ("C-c u" . web-mode-fold-or-unfold))
+(bind-keys :map web-mode-map
+           ("C-o C-f" . web-mode-fold-or-unfold))
 ;; ;; (bind-keys :map ac-completing-map
 ;; ;;            ("M-/" . ac-stop))
 ;; ;; (bind-keys :map emacs-lisp-mode-map
@@ -246,3 +255,5 @@
 
 (map! :map org-mode-map
       "S-M-RET"      #'+org/insert-item-above)
+
+(bind-key "s-i" 'origami-toggle-node)

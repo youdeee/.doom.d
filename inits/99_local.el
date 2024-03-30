@@ -12,6 +12,6 @@
 
 ;; (setq lsp-dart-sdk-dir "~/flutter/bin/cache/dart-sdk/")
 ;; (setq mc/list-file "~/.emacs.d/.cache/.mc-lists.el")
-;; (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/.cache/undotree")))
+(setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/.cache/undotree")))
 ;; (setq undohist-directory "~/.emacs.d/.cache/undohist")
 (setq helm-ag-use-agignore t)

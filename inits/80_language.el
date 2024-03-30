@@ -7,7 +7,7 @@
 ;; (autoload 'js2-mode "js2-mode" nil t)
 ;; (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.tsx\\'" . react-mode))
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
 ;; ;; (flycheck-add-mode 'javascript-eslint 'js2-jsx-mode)
 ;; ;; (add-hook 'js2-jsx-mode-hook 'flycheck-mode)
 (setq js2-basic-offset 2)
@@ -171,3 +171,4 @@
 (setq web-mode-enable-auto-closing t)
 (setq web-mode-script-padding 2)
 ;; (setq lsp-enable-on-type-formatting t)
+(setq typescript-indent-level 2)

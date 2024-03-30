@@ -178,6 +178,8 @@
 * 要約
 ** 140字
 
+** キーワード
+- 
 ** その他
 - 
 
@@ -240,3 +242,7 @@ This command's old key binding has been given to `kill-ring-save'."
   (comment-or-uncomment-region beg end region)
   (setq deactivate-mark t)
   nil)
+
+(defun insert-timestamp ()
+  (interactive)
+  (insert (format-time-string "%Y/%m/%d %H:%M ")))
