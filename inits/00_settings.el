@@ -42,7 +42,6 @@
 (setq kill-ring-max 1000)
 (setq persp-auto-save-num-of-backups 10)
 (setq recentf-max-menu-items 500)
-(setq recentf-max-saved-items 3000)
 
 (setq tab-always-indent 'complete)
 

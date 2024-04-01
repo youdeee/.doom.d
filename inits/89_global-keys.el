@@ -39,6 +39,7 @@
 (bind-key "C-o =" 'indent-and-clean-buffer)
 (bind-key "C-M-;" 'copy-region-and-comment-out)
 (bind-key* "M-t" 'insert-timestamp)
+(bind-key* "s-p" 'add-file-name-to-kill-ring)
 
 ;; defaults
 (bind-key* "C-h" 'delete-backward-char)
@@ -91,6 +92,8 @@
            ("C-h" . isearch-del-char))
 (bind-key* "s-v" 'describe-variable)
 (bind-key* "C-?" 'undo-fu-only-redo)
+(bind-key* "M-r" 'downcase-word)
+(bind-key* "M-l" 'move-to-window-line-top-bottom)
 
 ;; helm
 (require 'helm)
@@ -164,11 +167,11 @@
 ;; ;; (bind-key "M-[" 'point-undo)
 ;; ;; (bind-key "M-]" 'point-redo)
 ;; ;;(bind-key "C-x c" 'smarter-compile)
-(bind-key* "C-;" 'avy-goto-word-1)
+(bind-key* "C-'" 'avy-goto-word-1)
 ;; (bind-key* "C-;" 'avy-goto-char)
-(bind-key* "C-:" 'avy-goto-char-2)
-(bind-key* "C-'" 'switch-window)
-(bind-key* "C-\"" 'avy-goto-line)
+(bind-key* "C-\"" 'avy-goto-char-2)
+(bind-key* "C-;" 'avy-goto-line)
+(bind-key* "C-:" 'switch-window)
 (bind-key* "C-o C-;" 'avy-goto-line-below)
 (bind-key* "C-o ;" 'avy-goto-line-above)
 (bind-key* "C-x C-z" 'open-dropbox-junk)

@@ -112,6 +112,7 @@
 (use-package! helm
   :after helm-mode
   :init
+  (setq helm-move-to-line-cycle-in-source nil)
   (setq helm-M-x-fuzzy-match nil)
   (setq helm-ff-fuzzy-matching t))
 
