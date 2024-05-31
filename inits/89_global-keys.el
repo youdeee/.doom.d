@@ -29,7 +29,7 @@
 (bind-key "s-z" 'split-window-3)
 (bind-key* "C-a" 'goto-line-beginning-or-indent)
 (bind-key* "C-e" 'end-of-line)
-(bind-key "M-t" 'custom-transpose-char)
+;; (bind-key "M-t" 'custom-transpose-char)
 ;;(bind-key "C-1" 'replace-symbol-from-kill-ring)
 ;; (bind-key "C-o k" 'replace-forward-from-kill-ring)
 ;; (bind-key "C-o ," 'replace-backward-from-kill-ring)
@@ -40,6 +40,8 @@
 (bind-key "C-M-;" 'copy-region-and-comment-out)
 (bind-key* "M-t" 'insert-timestamp)
 (bind-key* "s-p" 'add-file-name-to-kill-ring)
+(bind-key "C-o C-q" 'extract-purchase-amount-from-torihiki)
+(bind-key "C-o C-w" 'extract-profit-from-torihiki)
 
 ;; defaults
 (bind-key* "C-h" 'delete-backward-char)
@@ -67,7 +69,10 @@
 
 ;; (global-unset-key (kbd "s-q"))
 ;; (bind-key* "s-q" 'auto-complete)
-(bind-key* "C-o C-t" '(lambda ()
+(bind-key* "C-o C-t" #'(lambda ()
+                        (interactive)
+                        (insert "\t")))
+(bind-key* "C-." #'(lambda ()
                         (interactive)
                         (insert "\t")))
 
@@ -258,5 +263,7 @@
 
 (map! :map org-mode-map
       "S-M-RET"      #'+org/insert-item-above)
+(map! :map org-mode-map
+      "C-,"      #'nil)
 
 (bind-key "s-i" 'origami-toggle-node)
