@@ -242,8 +242,8 @@ This command's old key binding has been given to `kill-ring-save'."
 (defun insert-timestamp (arg)
   (interactive "p")
   (if (equal arg 4)
-      (insert (format-time-string "%Y/%m/%d %H:%M "))
-    (insert (format-time-string "%H:%M "))))
+      (insert (format-time-string "%H:%M "))
+    (insert (format-time-string "%Y/%m/%d %H:%M "))))
 
 (defun extract-second-and-third-numbers (line)
   "与えられた行から2番目と3番目の数字を抽出する。"
