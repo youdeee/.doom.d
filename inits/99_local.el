@@ -6,11 +6,11 @@
 ;; (setq migemo-regex-dictionary nil)
 ;; (setq migemo-coding-system 'utf-8-unix)
 ;; (migemo-init)
-
 (setq org-directory "~/Dropbox/junk/org/")
 (setq org-agenda-files (list org-directory))
-
-;; (setq lsp-dart-sdk-dir "~/flutter/bin/cache/dart-sdk/")
+;; (setq lsp-dart-sdk-dir "~/fvm/versions/3.22.3/bin/cache/dart-sdk/")
+;; (setq lsp-dart-flutter-sdk-dir "~/fvm/versions/3.22.3/")
+;; (setq lsp-dart-flutter-executable "fvm flutter")
 ;; (setq mc/list-file "~/.emacs.d/.cache/.mc-lists.el")
 (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/.cache/undotree")))
 ;; (setq undohist-directory "~/.emacs.d/.cache/undohist")
