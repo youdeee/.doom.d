@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: entry after action
+# uuid: entryafteraction
+# key: e
+# condition: t
+# --
+  - エントリーテンプレ
+    - エントリー根拠 $0
+    - 感情 
+    - すぐ同値かガチホか 
+    - 利確後のアクション 
+    - 損切後のアクション 
+    - ラインごとに到達後のアクション 
+  - 

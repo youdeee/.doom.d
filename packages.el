@@ -56,7 +56,7 @@
 (package! helm-ag)
 (package! smart-newline)
 (package! smartrep)
-(package! sticky)
+;; (package! sticky)
 (package! helm-swoop)
 (package! lsp-dart)
 (package! yaml-mode)

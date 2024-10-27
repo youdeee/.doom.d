@@ -1,2 +1,2 @@
-(require 'sticky)
-(use-sticky-key ?\; sticky-alist:en)
+;; (require 'sticky)
+;; (use-sticky-key ?\; sticky-alist:en)
