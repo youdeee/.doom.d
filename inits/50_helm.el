@@ -117,3 +117,12 @@
   (setq helm-ff-fuzzy-matching t))
 
 (remove-hook 'doom-first-buffer-hook #'ws-butler-global-mode)
+
+;; helm-swoop も同様に下部に表示
+(setq helm-swoop-split-window-function
+      (lambda (buf &rest _args)
+        (display-buffer
+         buf
+         '((display-buffer-reuse-window
+            display-buffer-at-bottom)
+           (window-height . 30)))))

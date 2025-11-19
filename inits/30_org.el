@@ -66,3 +66,5 @@
      (:foreground "#baa76e")))))
 
 (setq org-M-RET-may-split-line '((default . t)))
+
+(add-to-list 'org-emphasis-alist '("/" (:background "yellow green" :foreground "black")))

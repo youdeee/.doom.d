@@ -158,7 +158,7 @@
 ;;   (package-refresh-contents)
 ;;   (mapc #'package-install package-selected-packages))
 
-(add-hook 'dart-mode-hook 'lsp)
+;; (add-hook 'dart-mode-hook 'lsp)
 
 (setq gc-cons-threshold (* 100 1024 1024)
       read-process-output-max (* 1024 1024))
@@ -172,3 +172,13 @@
 (setq web-mode-script-padding 2)
 ;; (setq lsp-enable-on-type-formatting t)
 (setq typescript-indent-level 2)
+
+;;(use-package lsp-mode
+;;  :commands lsp
+;;  :ensure t
+;;  :diminish lsp-mode
+;;  :hook
+;;  (elixir-mode . lsp)
+;;  :init
+;;  (add-to-list 'exec-path "~/workspace/elixir-ls-v0.29.2"))
+

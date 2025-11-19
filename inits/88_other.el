@@ -243,3 +243,13 @@
 (global-hl-todo-mode 1)
 
 (global-origami-mode 1)
+
+;; ;; バッファ切り替え時にフレームをリサイズしない
+;; (setq frame-inhibit-implied-resize t)
+
+;; (setq redisplay-skip-fontification-on-input t)
+;; (setq fast-but-imprecise-scrolling t)
+;; (setq inhibit-compacting-font-caches t)
+
+;; (set-face-attribute 'default nil :family "Menlo" :height 140)
+;; (set-fontset-font t 'japanese-jisx0208 (font-spec :family "Hiragino Sans"))

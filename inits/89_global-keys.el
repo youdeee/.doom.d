@@ -42,10 +42,11 @@
 (bind-key* "s-p" 'add-file-name-to-kill-ring)
 (bind-key "C-o C-q" 'extract-purchase-amount-from-torihiki)
 (bind-key "C-o C-w" 'extract-profit-from-torihiki)
+(bind-key "C-o C-e" 'extract-torihiki-data)
 
 ;; defaults
 (bind-key* "C-h" 'delete-backward-char)
-(bind-key* "C-x k" 'kill-this-buffer)
+(bind-key* "C-x k" 'kill-current-buffer)
 ;;(bind-key "s-&" 'kill-buffer)
 (bind-key* "C-S-v" 'scroll-down-command)
 (bind-key "M-h" 'backward-kill-word)
@@ -102,7 +103,7 @@
 
 ;; helm
 (require 'helm)
-(bind-key* "M-."     'helm-bookmarks)
+;; (bind-key* "M-."     'helm-bookmarks)
 (bind-key* "C-x f" '+helm/workspace-mini)
 ;; (bind-key* "C-x C-f" 'helm-find-files)
 (bind-key "C-o f" 'helm-projectile-find-file) ;;'helm-ls-git-ls)
@@ -112,7 +113,7 @@
 (bind-key* "M-o" 'helm-occur)
 (bind-key* "M-O" 'helm-ag-buffers)
 ;; (bind-key* "C-M-o" 'helm-multi-swoop-all)
-(bind-key "C-o C-a" 'helm-projectile-ag) ;; helm-multi-swoop-projectile
+(bind-key "C-o C-a" 'helm-do-ag-project-root)
 ;; (bind-key "C-x b" 'helm-do-ag-buffers)
 ;; (bind-key "C-x C-d" 'helm-dired-recent-dirs-view)
 ;; (bind-key "<f1> a" 'helm-apropos)
@@ -163,7 +164,8 @@
 (bind-key* "C-o C-r" 'anzu-query-replace-at-cursor-thing)
 ;; (bind-key* "C-]" 'er/expand-region)
 ;; (bind-key* "C-}" 'er/contract-region)
-;; ;;(bind-key "M-8" 'highlight-symbol-at-point)
+(bind-key* "M-," 'highlight-symbol-at-point)
+(bind-key* "M-." 'unhighlight-regexp)
 ;; ;;(bind-key "M-*" 'my-highlight-symbol-input)
 ;; ;;(bind-key "C-M-*" 'highlight-symbol-remove-all)
 
@@ -172,10 +174,10 @@
 ;; ;; (bind-key "M-[" 'point-undo)
 ;; ;; (bind-key "M-]" 'point-redo)
 ;; ;;(bind-key "C-x c" 'smarter-compile)
-(bind-key* "C-'" 'avy-goto-word-1)
+(bind-key* "C-;" (lambda () (interactive) (let ((current-prefix-arg '(4))) (call-interactively #'avy-goto-word-1))))
 ;; (bind-key* "C-;" 'avy-goto-char)
-(bind-key* "C-\"" 'avy-goto-char-2)
-(bind-key* "C-;" 'avy-goto-line)
+;; (bind-key* "C-\"" 'avy-goto-char-2)
+(bind-key* "C-'" (lambda () (interactive) (let ((current-prefix-arg '(4))) (call-interactively #'avy-goto-line))))
 (bind-key* "C-:" 'switch-window)
 (bind-key* "C-o C-;" 'avy-goto-line-below)
 (bind-key* "C-o ;" 'avy-goto-line-above)
@@ -267,3 +269,5 @@
       "C-,"      #'nil)
 
 (bind-key "s-i" 'origami-toggle-node)
+
+(bind-key "s-." 'lsp-find-definition)

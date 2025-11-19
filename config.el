@@ -75,6 +75,27 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-  ;; (require 'init-loader)
-  (setq init-loader-show-log-after-init 'error-only)
-  (init-loader-load "~/.doom.d/inits")
+;; Eglot の自動起動を止める
+(setq eglot-server-programs nil)
+(remove-hook 'typescript-ts-mode-hook #'eglot-ensure)
+(remove-hook 'tsx-ts-mode-hook #'eglot-ensure)
+(remove-hook 'js-ts-mode-hook #'eglot-ensure)
+
+;; Tide を止める
+(remove-hook 'typescript-ts-mode-hook #'tide-setup)
+(remove-hook 'tsx-ts-mode-hook #'tide-setup)
+
+;; (setq gc-cons-threshold most-positive-fixnum)
+;; (setq gc-cons-percentage 0.6)
+
+;; ;; idleの時にGCを走らせる（doomのgcmhでも似たことをやっています）
+;; (add-hook 'emacs-idle-hook
+;;           (lambda () (garbage-collect)))
+
+;; (setq native-comp-async-report-warnings-errors nil) ;; 警告を黙らせる
+;; (setq native-comp-deferred-compilation t)           ;; バックグラウンドでコンパイル
+
+
+(require 'init-loader)
+(setq init-loader-show-log-after-init 'error-only)
+(init-loader-load "~/.doom.d/inits")
