@@ -104,7 +104,7 @@
 ;; helm
 (require 'helm)
 ;; (bind-key* "M-."     'helm-bookmarks)
-(bind-key* "C-x f" '+helm/workspace-mini)
+(bind-key* "C-x f" 'helm-mini) ;; '+helm/workspace-mini) なんかemacs2つにしてから死ぬ。。。
 ;; (bind-key* "C-x C-f" 'helm-find-files)
 (bind-key "C-o f" 'helm-projectile-find-file) ;;'helm-ls-git-ls)
 (bind-key "M-y"     'helm-show-kill-ring)

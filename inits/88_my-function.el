@@ -324,3 +324,20 @@ This command's old key binding has been given to `kill-ring-save'."
     (let ((final-output (string-join (nreverse result-lines) "\n")))
       (kill-new final-output)
       (message "%s" final-output))))
+
+;;; --- checkbox reset function ---
+(defun my/org-uncheck-all-subtree ()
+  (interactive)
+  (save-excursion
+    (let ((beg (if (org-before-first-heading-p)
+                   (point-min)
+                 (progn (org-back-to-heading t) (point))))
+          (end (if (org-before-first-heading-p)
+                   (point-max)
+                 (org-end-of-subtree t t))))
+      (goto-char beg)
+      (while (re-search-forward "\\[[X-]\\]" end t)
+        (replace-match "[ ]" t t)))))
+(with-eval-after-load 'org
+  ;; C-o をプレフィックスとして使う
+  (define-key org-mode-map (kbd "C-o u") #'my/org-uncheck-all-subtree))
