@@ -1,49 +1,45 @@
-;; meta -> command
+;;; -*- lexical-binding: t; -*-
+
 (when (eq system-type 'darwin)
-  (setq ns-command-modifier (quote meta))
-  (setq ns-alternate-modifier (quote super))
-   (setq mac-right-option-modifier 'super)
-   (setq ns-right-option-modifier 'super))
+  (setq mac-command-modifier 'meta
+        mac-option-modifier 'super
+        mac-right-option-modifier 'super
+        ns-command-modifier 'meta
+        ns-alternate-modifier 'super
+        ns-right-option-modifier 'super))
 
-;; シンボリックリンクを開くときの質問省略
-;;(setq vc-follow-symlinks t)
+(after! wdired
+  (setq wdired-allow-to-change-permissions t))
 
-;; 編集時 buffer 再読み込み
-;;(global-auto-revert-mode 1)
+(after! dired
+  (setq delete-by-moving-to-trash t
+        ;; diredを2つのウィンドウで開いている時に、デフォルトの移動orコピー先をもう一方のdiredで開いているディレクトリにする
+        dired-dwim-target t
+        ;; ディレクトリを再帰的にコピーする
+        dired-recursive-copies 'always
+        ;; diredバッファでC-sした時にファイル名だけにマッチするように
+        dired-isearch-filenames t)
+  (map! :map dired-mode-map
+        "e" #'wdired-change-to-wdired-mode))
 
-(require 'wdired)
-(setq wdired-allow-to-change-permissions t)
-(define-key dired-mode-map "e" 'wdired-change-to-wdired-mode)
-(setq delete-by-moving-to-trash t)
+(use-package! generic-x
+  :demand t)
 
-;; 特にtramp時、zshを使わない
-;;(eval-after-load 'tramp '(setenv "SHELL" "/bin/zsh"))
+(setq mouse-drag-copy-region t
+      save-interprogram-paste-before-kill t
+      yank-pop-change-selection t
+      set-mark-command-repeat-pop t
+      mark-ring-max 32
+      kill-ring-max 1000
+      tab-always-indent 'complete
+      confirm-kill-processes nil
+      confirm-kill-emacs nil)
 
-;; マウス選択箇所を自動コピー
-(setq mouse-drag-copy-region t)
+(add-to-list 'safe-local-variable-values
+             '(flycheck-emacs-lisp-load-path . inherit))
 
-(require 'generic-x)
+(after! persp-mode
+  (setq persp-auto-save-num-of-backups 10))
 
-;; ;;(setq truncate-partial-width-windows nil)
-
-(setq save-interprogram-paste-before-kill t)
-(setq yank-pop-change-selection t)
-
-;; diredを2つのウィンドウで開いている時に、デフォルトの移動orコピー先をもう一方のdiredで開いているディレクトリにする
-(setq dired-dwim-target t)
-;; ディレクトリを再帰的にコピーする
-(setq dired-recursive-copies 'always)
-;; diredバッファでC-sした時にファイル名だけにマッチするように
-(setq dired-isearch-filenames t)
-
-(setq set-mark-command-repeat-pop t)
-(setq mark-ring-max 32)
-
-(setq kill-ring-max 1000)
-(setq persp-auto-save-num-of-backups 10)
-(setq recentf-max-menu-items 500)
-
-(setq tab-always-indent 'complete)
-
-(setq confirm-kill-processes nil)
-(setq confirm-kill-emacs nil)
+(after! recentf
+  (setq recentf-max-menu-items 500))

@@ -1,0 +1,15 @@
+# User Environment Context
+- Editor: Doom Emacs
+- Keybindings: Standard Emacs (Non-Evil mode, NO Vim bindings)
+- User Preferences: Uses idiomatic Emacs keybindings (C-x, C-c, M-x, etc.) and Doom's map/leader system.
+- Custom Structure: Uses `inits/` directory (e.g., `inits/init-*.el`) for modular configuration.
+
+# Goal & Scope
+- Refactor, optimize, and modernize the user's Doom Emacs configuration (`~/.doom.d/`).
+- Improve load times, code cleanliness, and feature integration without breaking existing setups.
+
+# Guidelines for Configuration & Code
+1. **Doom-Idiomatic Elisp:** Use Doom Emacs macros (`map!`, `use-package!`, `package!`, `after!`, `load!`) instead of legacy/plain Emacs Lisp (`require`, `load-file`, plain `use-package`) where appropriate.
+2. **No Evil/Vim Suggestions:** All keybinding suggestions MUST use standard Emacs/Doom Non-Evil keybindings. Avoid `:n`, `:v`, or Vim-style modal editing commands in `map!`.
+3. **Inits & Modularity:** Cleanly organize `inits/` files. Use `load!` in `config.el` to import them seamlessly.
+4. **Validation Instructions:** Always instruct the user to run `doom sync` or `M-x doom/reload` after making configuration changes.

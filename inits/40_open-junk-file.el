@@ -1,5 +1,9 @@
-(require 'open-junk-file)
-(setq open-junk-file-find-file-function 'find-file)
+;;; -*- lexical-binding: t; -*-
+
+(use-package! open-junk-file
+  :commands (open-junk-file)
+  :config
+  (setq open-junk-file-find-file-function #'find-file))
 
 (defun open-dropbox-junk ()
   (interactive)

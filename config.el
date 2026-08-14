@@ -40,7 +40,7 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-;; (setq org-directory "~/org/")
+(setq org-directory "~/Dropbox/junk/org/")
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
@@ -96,6 +96,15 @@
 ;; (setq native-comp-deferred-compilation t)           ;; バックグラウンドでコンパイル
 
 
-(require 'init-loader)
-(setq init-loader-show-log-after-init 'error-only)
-(init-loader-load "~/.doom.d/inits")
+(load! "inits/00_settings")
+(load! "inits/30_anzu")
+(load! "inits/30_multiple-cursors")
+(load! "inits/30_org")
+(load! "inits/40_open-junk-file")
+(load! "inits/50_helm")
+(load! "inits/80_language")
+(load! "inits/81_ruby")
+(load! "inits/88_my-function")
+(load! "inits/88_other")
+(load! "inits/89_global-keys")
+(load! "inits/99_local")

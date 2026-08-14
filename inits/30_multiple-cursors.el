@@ -1,5 +1,7 @@
-(require 'multiple-cursors)
-(setq mc/always-run-for-all t)
+;;; -*- lexical-binding: t; -*-
+
+(after! multiple-cursors
+  (setq mc/always-run-for-all t))
 ;; (require 'smartrep)
 ;; (declare-function smartrep-define-key "smartrep")
 

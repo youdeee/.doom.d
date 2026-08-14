@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 ;; 残り
 ;; s- whitespace
 ;; C- ` - = - 5~9
@@ -14,106 +16,117 @@
 
 
 ;; 自作関数
-(global-unset-key (kbd "C-o"))
-(bind-key "C-o" 'mode-specific-command-prefix)
+(map! "C-o" #'mode-specific-command-prefix
+      "C-z" #'mode-specific-command-prefix)
 
-(bind-key "s-," 'toggle-frame-maximized)
-(bind-key* "C-t" 'move-window)
-(bind-key* "C-M-t" 'move-window-opposite)
-(bind-key "C-," 'kill-line-backward)
-(bind-key* "C-M-k" 'kill-all-line-forward)
-(bind-key "C-M-," 'kill-all-line-backward)
-(bind-key "M-m" 'start-and-end-macro)
-(bind-key "s-k" 'kill-*-buffer)
-;;(bind-key "C-x a k" 'kill-all-buffer)
-(bind-key "s-z" 'split-window-3)
-(bind-key* "C-a" 'goto-line-beginning-or-indent)
-(bind-key* "C-e" 'end-of-line)
+(map! :map override
+      "C-t"     #'move-window
+      "C-M-t"   #'move-window-opposite
+      "C-M-k"   #'kill-all-line-forward
+      "C-a"     #'goto-line-beginning-or-indent
+      "C-e"     #'end-of-line
+      ;; s-w押すときに間違って押してc-x c-cで強制終了することがあるのでとりあえず割り当ててる。割り当てたいコマンドできたら何かに当てたい
+      "s-q"     #'window-resizer
+      "M-t"     #'insert-timestamp
+      "s-p"     #'add-file-name-to-kill-ring
+      "C-h"     #'delete-backward-char
+      "C-x k"   #'kill-current-buffer
+      "C-S-v"   #'scroll-down-command
+      "C-M-i"   #'delete-indentation
+      "C-o C-t" (cmd! (insert "\t"))
+      "C-."     (cmd! (insert "\t"))
+      "C-<tab>" #'switch-to-next-buffer
+      "C-S-<tab>" #'switch-to-prev-buffer
+      "s-<right>" #'+workspace/switch-right
+      "s-<left>" #'+workspace/switch-left
+      "s-v"     #'describe-variable
+      "C-?"     #'undo-fu-only-redo
+      "M-r"     #'downcase-word
+      "M-l"     #'move-to-window-line-top-bottom
+      "C-x f"   #'helm-mini ;; '+helm/workspace-mini) なんかemacs2つにしてから死ぬ。。。
+      "C-o a"   #'helm-ag
+      "M-o"     #'helm-occur
+      "M-O"     #'helm-ag-buffers
+      "C-o r"   #'anzu-query-replace-regexp
+      "C-o C-r" #'anzu-query-replace-at-cursor-thing
+      "M-,"     #'highlight-symbol-at-point
+      "M-."     #'unhighlight-regexp
+      "C-;"     #'avy-goto-word-1
+      ;; (bind-key* "C-;" 'avy-goto-char)
+      ;; (bind-key* "C-\"" 'avy-goto-char-2)
+      "C-'"     #'avy-goto-line
+      "C-:"     #'switch-window
+      "C-o C-;" #'avy-goto-line-below
+      "C-o ;"   #'avy-goto-line-above
+      "C-x C-z" #'open-dropbox-junk
+      "M-/"     #'hippie-expand)
+
+(map! "s-,"   #'toggle-frame-maximized
+      "C-,"   #'kill-line-backward
+      "C-M-," #'kill-all-line-backward
+      "M-m"   #'start-and-end-macro
+      "s-k"   #'kill-*-buffer
+      ;;(bind-key "C-x a k" 'kill-all-buffer)
+      "s-z"   #'split-window-3
+      "s-w"   #'window-resizer
+      "s-s"   #'save-buffer-without-hook
+      "C-o =" #'indent-and-clean-buffer
+      "C-M-;" #'copy-region-and-comment-out
+      "C-o C-q" #'extract-purchase-amount-from-torihiki
+      "C-o C-w" #'extract-profit-from-torihiki
+      "C-o C-e" #'extract-torihiki-data
+      "M-h"   #'backward-kill-word
+      "C-x t" #'other-frame
+      "s-f"   #'toggle-truncate-lines
+      "s-g"   #'display-fill-column-indicator-mode
+      "C-x m" #'kmacro-end-and-call-macro
+      "C-x C-n" #'toggle-display-line-numbers
+      "M-q"   #'quoted-insert
+      "M-k"   #'kill-whole-line
+      "C-x C-t" #'transpose-lines
+      "s-e"   #'eval-buffer
+      "M-p"   #'backward-paragraph
+      "M-n"   #'forward-paragraph
+      "C-j"   #'smart-newline
+      "C-M-j" #'+default/newline
+      "C-o f" #'helm-projectile-find-file ;;'helm-ls-git-ls)
+      "M-y"   #'helm-show-kill-ring
+      "C-o C-a" #'helm-do-ag-project-root
+      "M-w"   #'easy-kill
+      "C-x 1" #'zoom-window-zoom
+      "s-i"   #'origami-toggle-node
+      "s-."   #'lsp-find-definition)
+
 ;; (bind-key "M-t" 'custom-transpose-char)
 ;;(bind-key "C-1" 'replace-symbol-from-kill-ring)
 ;; (bind-key "C-o k" 'replace-forward-from-kill-ring)
 ;; (bind-key "C-o ," 'replace-backward-from-kill-ring)
-(bind-key "s-w" 'window-resizer)
-(bind-key* "s-q" 'window-resizer) ;; s-w押すときに間違って押してc-x c-cで強制終了することがあるのでとりあえず割り当ててる。割り当てたいコマンドできたら何かに当てたい
-(bind-key "s-s" 'save-buffer-without-hook)
-(bind-key "C-o =" 'indent-and-clean-buffer)
-(bind-key "C-M-;" 'copy-region-and-comment-out)
-(bind-key* "M-t" 'insert-timestamp)
-(bind-key* "s-p" 'add-file-name-to-kill-ring)
-(bind-key "C-o C-q" 'extract-purchase-amount-from-torihiki)
-(bind-key "C-o C-w" 'extract-profit-from-torihiki)
-(bind-key "C-o C-e" 'extract-torihiki-data)
 
 ;; defaults
-(bind-key* "C-h" 'delete-backward-char)
-(bind-key* "C-x k" 'kill-current-buffer)
 ;;(bind-key "s-&" 'kill-buffer)
-(bind-key* "C-S-v" 'scroll-down-command)
-(bind-key "M-h" 'backward-kill-word)
 ;;(bind-key "C-x 5 o" 'transpose-words)
-(bind-key "C-x t" 'other-frame)
 ;;(bind-key "s-u" 'browse-url-of-file)
 ;; (bind-key "M-SPC" 'delete-trailing-whitespace)
-(bind-key "M-SPC" 'linum-mode)
 ;;(bind-key "s-f" 'auto-fill-mode)
-(bind-key "s-f" 'toggle-truncate-lines)
-(bind-key "C-x m" 'kmacro-end-and-call-macro)
-(bind-key "C-x C-n" 'linum-mode)
-(bind-key "M-q" 'quoted-insert)
-(bind-key "M-k" 'kill-whole-line)
-(bind-key "M-t" 'transpose-chars)
-(bind-key "C-x C-t" 'transpose-lines)
 ;;(bind-key "C-x d" 'dired-jump)
 ;;(bind-key "s-r" 'revert-buffer)
-(bind-key "s-e" 'eval-buffer)
-(bind-key* "C-M-i" 'delete-indentation)
-
+;; (bind-key "M-t" 'transpose-chars)
 ;; (global-unset-key (kbd "s-q"))
 ;; (bind-key* "s-q" 'auto-complete)
-(bind-key* "C-o C-t" #'(lambda ()
-                        (interactive)
-                        (insert "\t")))
-(bind-key* "C-." #'(lambda ()
-                        (interactive)
-                        (insert "\t")))
-
-(bind-key* "C-<tab>" 'switch-to-next-buffer)
-(bind-key* "C-S-<tab>" 'switch-to-prev-buffer)
-(bind-key* "s-<right>" '+workspace/switch-right)
-(bind-key* "s-<left>" '+workspace/switch-left)
-
-(global-unset-key (kbd "C-z"))
-(bind-key "C-z" 'mode-specific-command-prefix)
 ;; (bind-key "C-q" 'back-to-indentation)
 ;; (bind-key "C-o C-f" 'fci-mode)
 ;; (bind-key "M-n" (lambda () (interactive) (scroll-up 1)))
 ;; (bind-key "M-p" (lambda () (interactive) (scroll-down 1)))
-
-(bind-key "M-p" 'backward-paragraph)
-(bind-key "M-n" 'forward-paragraph)
-(bind-key "C-j" 'smart-newline)
-(bind-key "C-M-j" '+default/newline)
 ;; (bind-key "M-RET" 'newline-and-indent)
-(bind-keys :map isearch-mode-map
-           ("C-h" . isearch-del-char))
-(bind-key* "s-v" 'describe-variable)
-(bind-key* "C-?" 'undo-fu-only-redo)
-(bind-key* "M-r" 'downcase-word)
-(bind-key* "M-l" 'move-to-window-line-top-bottom)
+
+(map! :map isearch-mode-map
+      "C-h" #'isearch-del-char)
 
 ;; helm
-(require 'helm)
 ;; (bind-key* "M-."     'helm-bookmarks)
-(bind-key* "C-x f" 'helm-mini) ;; '+helm/workspace-mini) なんかemacs2つにしてから死ぬ。。。
 ;; (bind-key* "C-x C-f" 'helm-find-files)
-(bind-key "C-o f" 'helm-projectile-find-file) ;;'helm-ls-git-ls)
-(bind-key "M-y"     'helm-show-kill-ring)
-(bind-key* "C-o a" 'helm-ag)
 ;; (bind-key* "M-o" (if (< 1000000 (buffer-size)) 'helm-occur 'helm-swoop))
-(bind-key* "M-o" 'helm-occur)
-(bind-key* "M-O" 'helm-ag-buffers)
 ;; (bind-key* "C-M-o" 'helm-multi-swoop-all)
-(bind-key "C-o C-a" 'helm-do-ag-project-root)
 ;; (bind-key "C-x b" 'helm-do-ag-buffers)
 ;; (bind-key "C-x C-d" 'helm-dired-recent-dirs-view)
 ;; (bind-key "<f1> a" 'helm-apropos)
@@ -126,46 +139,45 @@
 ;; (define-key helm-find-files-map (kbd "C-h") 'delete-backward-char)
 
 ;; yasnippet
-(require 'yasnippet)
-(global-unset-key (kbd "C-x i"))
-(bind-key "C-x i i" 'yas-insert-snippet)
-(bind-key "C-x i n" 'yas-new-snippet)
-(bind-key "C-x i e" 'yas-visit-snippet-file)
-(bind-keys :map yas-minor-mode-map
-           ("TAB" . nil)
-           ("<tab>" . nil)
-           ("C-q" . yas-expand-from-trigger-key))
+(map! "C-x i" nil
+      "C-x i i" #'yas-insert-snippet
+      "C-x i n" #'yas-new-snippet
+      "C-x i e" #'yas-visit-snippet-file)
+
+(after! yasnippet
+  (map! :map yas-minor-mode-map
+        "TAB" nil
+        "<tab>" nil
+        "C-q" #'yas-expand-from-trigger-key))
 
 ;; multi-cursor
 ;; (bind-key "C-|" 'mc/edit-lines) ;;リージョン全てにカーソルおく
-(global-unset-key (kbd "C-\\"))
-(require 'smartrep)
-(smartrep-define-key global-map "C-\\"
-  '(("C-\\"      . 'mc/mark-next-like-this)
-    ("n"        . 'mc/mark-next-like-this)
-    ("p"        . 'mc/unmark-next-like-this)
-    ("P"        . 'mc/mark-previous-like-this)
-    ("N"        . 'mc/unmark-previous-like-this)
-    ("s"        . 'mc/skip-to-next-like-this)
-    ("S"        . 'mc/skip-to-previous-like-this)
-    ("m"        . 'mc/mark-more-like-this-extended)
-    ("*"        . 'mc/mark-all-like-this)
-    ("d"        . 'mc/mark-all-like-this-dwim)
-    ("i"        . 'my/mc/insert-numbers)
-    ("o"        . 'mc/sort-regions)
-    ("O"        . 'mc/reverse-regions)))
+(use-package! smartrep
+  :demand t
+  :config
+  (map! "C-\\" nil)
+  (smartrep-define-key global-map "C-\\"
+    '(("C-\\" . 'mc/mark-next-like-this)
+      ("n"    . 'mc/mark-next-like-this)
+      ("p"    . 'mc/unmark-next-like-this)
+      ("P"    . 'mc/mark-previous-like-this)
+      ("N"    . 'mc/unmark-previous-like-this)
+      ("s"    . 'mc/skip-to-next-like-this)
+      ("S"    . 'mc/skip-to-previous-like-this)
+      ("m"    . 'mc/mark-more-like-this-extended)
+      ("*"    . 'mc/mark-all-like-this)
+      ("d"    . 'mc/mark-all-like-this-dwim)
+      ("i"    . 'my/mc/insert-numbers)
+      ("o"    . 'mc/sort-regions)
+      ("O"    . 'mc/reverse-regions))))
 
 ;; ;; magit
 ;; (bind-key "s-g" 'magit-status)
 
 ;; ;; ohter
 ;; ;;(bind-key "C-o d" 'ag-dired)
-(bind-key* "C-o r" 'anzu-query-replace-regexp)
-(bind-key* "C-o C-r" 'anzu-query-replace-at-cursor-thing)
 ;; (bind-key* "C-]" 'er/expand-region)
 ;; (bind-key* "C-}" 'er/contract-region)
-(bind-key* "M-," 'highlight-symbol-at-point)
-(bind-key* "M-." 'unhighlight-regexp)
 ;; ;;(bind-key "M-*" 'my-highlight-symbol-input)
 ;; ;;(bind-key "C-M-*" 'highlight-symbol-remove-all)
 
@@ -174,14 +186,6 @@
 ;; ;; (bind-key "M-[" 'point-undo)
 ;; ;; (bind-key "M-]" 'point-redo)
 ;; ;;(bind-key "C-x c" 'smarter-compile)
-(bind-key* "C-;" (lambda () (interactive) (let ((current-prefix-arg '(4))) (call-interactively #'avy-goto-word-1))))
-;; (bind-key* "C-;" 'avy-goto-char)
-;; (bind-key* "C-\"" 'avy-goto-char-2)
-(bind-key* "C-'" (lambda () (interactive) (let ((current-prefix-arg '(4))) (call-interactively #'avy-goto-line))))
-(bind-key* "C-:" 'switch-window)
-(bind-key* "C-o C-;" 'avy-goto-line-below)
-(bind-key* "C-o ;" 'avy-goto-line-above)
-(bind-key* "C-x C-z" 'open-dropbox-junk)
 ;; (bind-key* "C-x C-a" 'open-0sec-memo)
 
 ;; (define-key evil-emacs-state-map (kbd "C-z") nil)
@@ -189,9 +193,6 @@
 ;; ;;(bind-key "C-." 'pop-tag-mark)
 ;; ;;(bind-key "M-." 'find-tag)
 ;; ;;(bind-key "C-M-." 'helm-etags-select)
-(bind-key "M-w" 'easy-kill)
-(bind-key* "M-/" 'hippie-expand)
-(bind-key "C-x 1" 'zoom-window-zoom)
 ;; (bind-key "C-x C-1" 'delete-other-windows)
 ;; (if (require 'switch-window nil 'noerror)
 ;;     (bind-key* "M-T" 'switch-window))
@@ -206,8 +207,9 @@
 ;; ;; (bind-keys :map ac-menu-map
 ;; ;;            ("C-n" . ac-next)
 ;; ;;            ("C-p" . ac-previous))
-(bind-keys :map web-mode-map
-           ("C-o C-f" . web-mode-fold-or-unfold))
+(after! web-mode
+  (map! :map web-mode-map
+        "C-o C-f" #'web-mode-fold-or-unfold))
 ;; ;; (bind-keys :map ac-completing-map
 ;; ;;            ("M-/" . ac-stop))
 ;; ;; (bind-keys :map emacs-lisp-mode-map
@@ -258,16 +260,14 @@
 ;; ;; C-]		Toggle basename/fullpath.
 ;; ;; C-c C-y		Yank current selection into pattern.
 
-(with-eval-after-load 'company
-  (define-key company-active-map (kbd "C-o") nil)
-  (define-key company-active-map (kbd "C-h") nil)
-  (define-key company-active-map (kbd "M-h") 'company-show-doc-buffer))
+(after! company
+  (map! :map company-active-map
+        "C-o" nil
+        "C-h" nil
+        "M-h" #'company-show-doc-buffer))
 
-(map! :map org-mode-map
-      "S-M-RET"      #'+org/insert-item-above)
-(map! :map org-mode-map
-      "C-,"      #'nil)
-
-(bind-key "s-i" 'origami-toggle-node)
-
-(bind-key "s-." 'lsp-find-definition)
+(after! org
+  (map! :map org-mode-map
+        "S-M-RET" #'+org/insert-item-above
+        "C-," nil
+        "C-o u" #'my/org-uncheck-all-subtree))

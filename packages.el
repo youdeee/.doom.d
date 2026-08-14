@@ -49,8 +49,6 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
-(package! init-loader)
-(package! bind-key)
 (package! open-junk-file)
 (package! easy-kill)
 (package! helm-ag)
@@ -67,3 +65,4 @@
 (package! hl-todo)
 (package! csv-mode)
 (package! origami)
+(package! rainbow-mode)

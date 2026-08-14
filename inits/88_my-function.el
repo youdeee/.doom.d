@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 (defun goto-line-beginning-or-indent (&optional $position)
   (interactive)
   (or $position (setq $position (point)))
@@ -197,7 +199,8 @@
     (write-region contents nil file)
     (find-file file))
   (outline-show-all)
-  (goto-line 10)
+  (goto-char (point-min))
+  (forward-line 9)
   (end-of-line))
 
 (defun indent-and-clean-buffer ()
@@ -338,6 +341,8 @@ This command's old key binding has been given to `kill-ring-save'."
       (goto-char beg)
       (while (re-search-forward "\\[[X-]\\]" end t)
         (replace-match "[ ]" t t)))))
-(with-eval-after-load 'org
-  ;; C-o をプレフィックスとして使う
-  (define-key org-mode-map (kbd "C-o u") #'my/org-uncheck-all-subtree))
+
+(defun toggle-display-line-numbers ()
+  "Toggle absolute line numbers, ignoring `display-line-numbers-type'."
+  (interactive)
+  (setq display-line-numbers (if display-line-numbers nil t)))
