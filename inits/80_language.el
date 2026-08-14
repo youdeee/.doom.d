@@ -1,10 +1,5 @@
 ;;; -*- lexical-binding: t; -*-
 
-(after! bm
-  (setq bm-cycle-all-buffers t))
-
-(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
-
 (setq js2-basic-offset 2
       css-indent-offset 2
       js-indent-level 2
@@ -31,9 +26,6 @@
         web-mode-enable-auto-closing t)
   (add-hook! 'web-mode-hook
     (setq-local indent-tabs-mode nil)))
-
-(use-package! rainbow-mode
-  :hook (css-mode scss-mode))
 
 (after! cc-mode
   (map! :map c-mode-base-map

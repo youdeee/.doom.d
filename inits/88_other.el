@@ -47,10 +47,10 @@
     (apply fn regex window-flip rest))
   (avy-migemo-mode 1))
 
-(use-package! switch-window
-  :defer t
-  :init
-  (setq switch-window-shortcut-style 'qwerty))
+(after! ace-window
+  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+  (custom-set-faces!
+    '(aw-leading-char-face :weight bold :height 2.0)))
 
 (custom-set-faces!
   '(mode-line :background "#464646")
@@ -58,9 +58,7 @@
   '(hl-line :underline "SteelBlue4")
   '(doom-modeline-buffer-modified :background "#da1001"))
 
-(use-package! hl-todo
-  :hook (doom-first-buffer . global-hl-todo-mode)
-  :config
+(after! hl-todo
   (setq hl-todo-keyword-faces
         '(("HOLD" . "#d0bf8f")
           ("TODO" . "#cc9393")
@@ -75,6 +73,3 @@
           ("XXX" . "#cc9393")
           ("XXXX" . "#cc9393")
           ("???" . "#cc9393"))))
-
-(use-package! origami
-  :hook (doom-first-buffer . global-origami-mode))

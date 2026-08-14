@@ -99,8 +99,104 @@
 - 2026-08-14 10:31 — Write ツール Auto-review ブロック（Markdown 表） — Python 経由の書き込みに切替して解消
 
 ## 5-Question Reboot Check
-- Where am I? コメント復帰 complete
-- Where am I going? 全フェーズ完了。ユーザーは doom sync と doom/reload が必要
-- What's the goal? リファクタ後も元コメントを残す
+- Where am I? Vertico/LSP 実装完了。sync 待ち
+- Where am I going? ユーザーが doom sync と Emacs 再起動
+- What's the goal? 生産性設定の刷新
 - What have I learned? findings.md を参照
 - What have I done? 本ファイルを参照
+
+## Session: 2026-08-14 (Vertico + Eglot + C-c 集約)
+
+### Phase 11–15
+- **Status:** complete
+- Actions taken:
+  - init.el を Vertico / lsp+eglot / tree-sitter / format / 言語+lsp に変更
+  - 重複パッケージとキーはコメントアウトで残した
+  - C-c リーダーに junk / avy / anzu-at-point / 取引抽出を追加
+  - :prefix による既存マップ破壊を避け、キー列で追加するようリファクタ
+- Files created/modified:
+  - `init.el`, `packages.el`, `config.el`
+  - `inits/00_settings.el`, `40_open-junk-file.el`, `50_helm.el`, `70_lsp.el` (new)
+  - `inits/80_language.el`, `88_other.el`, `89_global-keys.el`, `99_local.el`
+
+## Session: 2026-08-14 (旧キー機能の補完)
+
+### Phase 17
+- **Status:** complete
+- Actions taken:
+  - M-o / M-O / C-x f を consult-line / consult-line-multi / consult-buffer へ
+  - C-c C-e wgrep 手順をコメントに記載
+  - C-c j n/p、s h/u、c =、f n を追加
+  - s-i と s-left/right を復活
+- Files created/modified:
+  - `inits/89_global-keys.el`
+  - `task_plan.md`
+
+## Session: 2026-08-14 (Corfu / window-select)
+
+### Phase 18
+- **Status:** complete
+- Actions taken:
+  - company を corfu +icons +orderless +dabbrev に切替
+  - window-select（ace-window）を有効化。switch-window はコメントアウト
+  - C-: ace-window、C-; completion-at-point、corfu-map の C-h を nil
+- Files created/modified:
+  - `init.el`, `packages.el`
+  - `inits/88_other.el`, `inits/89_global-keys.el`
+  - `task_plan.md`
+
+## Session: 2026-08-14 (helm-show-kill-ring)
+
+### Phase 20
+- **Status:** complete
+- Actions taken:
+  - `(package! helm)` を追加。`:completion helm` は無効のまま
+  - `50_helm.el` を kill-ring 専用にし `config.el` から load
+  - `yank-pop` を `helm-show-kill-ring` に remap。helm-mode は呼ばない
+- Files created/modified:
+  - `packages.el`
+  - `inits/50_helm.el`
+  - `config.el`
+  - `task_plan.md`
+
+## Session: 2026-08-14 (Corfu yasnippet)
+
+### Phase 21
+- **Status:** complete
+- Actions taken:
+  - eglot 管理バッファで eglot + yasnippet-capf を cape-wrap-super でマージ
+  - cape-file / cape-dabbrev など既存 CAPF は残す
+- Files created/modified:
+  - `inits/70_lsp.el`
+  - `task_plan.md`
+
+## Session: 2026-08-14 (Company 復帰)
+
+### Phase 22
+- **Status:** complete
+- Actions taken:
+  - `init.el` で company を有効、corfu をコメントアウト
+  - eglot の yasnippet-capf マージを削除
+  - company-active-map の C-h / M-h を復活。Corfu の C-; を削除
+- Files created/modified:
+  - `init.el`
+  - `inits/70_lsp.el`
+  - `inits/89_global-keys.el`
+  - `task_plan.md`
+
+## Session: 2026-08-14 (Corfu 復元)
+
+### Phase 23
+- **Status:** complete
+- Actions taken:
+  - `init.el` で corfu を再有効、company をコメントアウト
+  - eglot + yasnippet-capf のマージを復活
+  - corfu-map の C-h と C-; completion-at-point を復活
+- Files created/modified:
+  - `init.el`
+  - `inits/70_lsp.el`
+  - `inits/89_global-keys.el`
+  - `task_plan.md`
+
+
+

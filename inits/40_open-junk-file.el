@@ -14,3 +14,8 @@
   (interactive)
   (setq open-junk-file-format "~/Dropbox/junk/0sec/%Y/%m/%d/%Y-%m-%d-%H%M%S.md")
   (open-junk-file))
+
+(defun my/consult-ripgrep-junk ()
+  "Search ~/Dropbox/junk with consult-ripgrep."
+  (interactive)
+  (consult-ripgrep (expand-file-name "~/Dropbox/junk")))

@@ -75,16 +75,6 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-;; Eglot の自動起動を止める
-(setq eglot-server-programs nil)
-(remove-hook 'typescript-ts-mode-hook #'eglot-ensure)
-(remove-hook 'tsx-ts-mode-hook #'eglot-ensure)
-(remove-hook 'js-ts-mode-hook #'eglot-ensure)
-
-;; Tide を止める
-(remove-hook 'typescript-ts-mode-hook #'tide-setup)
-(remove-hook 'tsx-ts-mode-hook #'tide-setup)
-
 ;; (setq gc-cons-threshold most-positive-fixnum)
 ;; (setq gc-cons-percentage 0.6)
 
@@ -95,13 +85,17 @@
 ;; (setq native-comp-async-report-warnings-errors nil) ;; 警告を黙らせる
 ;; (setq native-comp-deferred-compilation t)           ;; バックグラウンドでコンパイル
 
+;; FVM のパスを Emacs の exec-path と PATH に追加
+(add-to-list 'exec-path "~/fvm/default/bin")
+(setenv "PATH" (concat "~/fvm/default/bin:" (getenv "PATH")))
 
 (load! "inits/00_settings")
 (load! "inits/30_anzu")
 (load! "inits/30_multiple-cursors")
 (load! "inits/30_org")
 (load! "inits/40_open-junk-file")
-(load! "inits/50_helm")
+(load! "inits/50_helm") ; helm-show-kill-ring のみ。helm-mode は使わない
+(load! "inits/70_lsp")
 (load! "inits/80_language")
 (load! "inits/81_ruby")
 (load! "inits/88_my-function")

@@ -43,3 +43,5 @@
 
 (after! recentf
   (setq recentf-max-menu-items 500))
+
+(remove-hook 'doom-first-buffer-hook #'ws-butler-global-mode)

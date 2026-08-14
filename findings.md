@@ -238,6 +238,9 @@ Helm / 検索置換:
 - smartrep は連続入力のため `:demand t` のまま
 - `M-t` は `insert-timestamp` のみ（旧 transpose-chars は捨てる）
 - `org-directory` は Org ロード前に効くよう `config.el` へ移動
+- Helm → Vertico+Consult。重複キーはコメントアウトして C-c に集約
+- 無効化キーは削除しない。置き換え先を行末コメントに書く
+- Helm 短キーは Consult 版で復活。検索結果編集は C-c C-e（wgrep）
 
 ## Issues Encountered
 - Write ツールが Markdown 表を含むファイル作成で Auto-review にブロックされた → Python 経由のファイル書き込みに切り替えた
@@ -259,6 +262,7 @@ Helm / 検索置換:
 - `inits/89_global-keys.el`
 - `inits/99_local.el`
 - `inits/legacy-archive.el`
+- `inits/70_lsp.el`
 
 ## Visual/Browser Findings
 - 該当なし（ローカル設定ファイルの読み取りのみ）

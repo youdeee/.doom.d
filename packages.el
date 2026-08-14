@@ -51,18 +51,19 @@
 
 (package! open-junk-file)
 (package! easy-kill)
-(package! helm-ag)
-(package! helm-projectile)
+(package! helm) ; helm-show-kill-ring のみ。:completion helm / helm-mode は使わない
+;; (package! helm-ag) ; Vertico/consult-ripgrep に移行
+;; (package! helm-projectile) ; projectile-find-file (C-c p f) に移行
 (package! smart-newline)
 (package! smartrep)
 ;; (package! sticky)
-(package! helm-swoop)
+;; (package! helm-swoop) ; consult-line (C-c s b) に移行
 ;; (package! lsp-dart)
-(package! yaml-mode)
+;; (package! yaml-mode) ; :lang yaml に移行
 ;; (package! undo-tree)
-(package! switch-window)
+;; (package! switch-window) ; :ui window-select (ace-window) に移行
 (package! zoom-window)
-(package! hl-todo)
+;; (package! hl-todo) ; :ui hl-todo に移行
 (package! csv-mode)
-(package! origami)
-(package! rainbow-mode)
+;; (package! origami) ; :editor fold (C-c C-f C-f) に移行
+;; (package! rainbow-mode) ; :lang web が css-mode-hook で有効化

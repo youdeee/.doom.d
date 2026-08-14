@@ -16,9 +16,7 @@
 
 
 ;; 自作関数
-(map! "C-o" #'mode-specific-command-prefix
-      "C-z" #'mode-specific-command-prefix)
-
+;; C-c リーダーに一本化したため無効化（C-o は open-line に戻す）
 (map! :map override
       "C-t"     #'move-window
       "C-M-t"   #'move-window-opposite
@@ -28,37 +26,31 @@
       ;; s-w押すときに間違って押してc-x c-cで強制終了することがあるのでとりあえず割り当ててる。割り当てたいコマンドできたら何かに当てたい
       "s-q"     #'window-resizer
       "M-t"     #'insert-timestamp
-      "s-p"     #'add-file-name-to-kill-ring
+      "s-p"     #'add-file-name-to-kill-ring ; C-c f n（basename）/ C-c f y
       "C-h"     #'delete-backward-char
       "C-x k"   #'kill-current-buffer
       "C-S-v"   #'scroll-down-command
       "C-M-i"   #'delete-indentation
-      "C-o C-t" (cmd! (insert "\t"))
+      ;; "C-o C-t" (cmd! (insert "\t")) ; C-. と重複
       "C-."     (cmd! (insert "\t"))
       "C-<tab>" #'switch-to-next-buffer
       "C-S-<tab>" #'switch-to-prev-buffer
       "s-<right>" #'+workspace/switch-right
-      "s-<left>" #'+workspace/switch-left
+      "s-<left>"  #'+workspace/switch-left
       "s-v"     #'describe-variable
       "C-?"     #'undo-fu-only-redo
       "M-r"     #'downcase-word
       "M-l"     #'move-to-window-line-top-bottom
-      "C-x f"   #'helm-mini ;; '+helm/workspace-mini) なんかemacs2つにしてから死ぬ。。。
-      "C-o a"   #'helm-ag
-      "M-o"     #'helm-occur
-      "M-O"     #'helm-ag-buffers
-      "C-o r"   #'anzu-query-replace-regexp
-      "C-o C-r" #'anzu-query-replace-at-cursor-thing
-      "M-,"     #'highlight-symbol-at-point
-      "M-."     #'unhighlight-regexp
-      "C-;"     #'avy-goto-word-1
+      ;; "C-x f"   #'helm-mini ;; '+helm/workspace-mini) なんかemacs2つにしてから死ぬ。。。 ; C-x b
+      "C-x f"   #'consult-buffer
+      "M-o"     #'consult-line
+      "M-O"     (cmd!! #'consult-line-multi 'all-buffers)
+      ;; "C-;"     #'avy-goto-word-1 ; avy は C-c j j
       ;; (bind-key* "C-;" 'avy-goto-char)
       ;; (bind-key* "C-\"" 'avy-goto-char-2)
-      "C-'"     #'avy-goto-line
-      "C-:"     #'switch-window
-      "C-o C-;" #'avy-goto-line-below
-      "C-o ;"   #'avy-goto-line-above
-      "C-x C-z" #'open-dropbox-junk
+      "C-\""     #'avy-goto-line ; imenu。avy は C-c j l
+      "C-:"     #'ace-window
+      "C-x C-z" #'open-dropbox-junk ; C-c n j
       "M-/"     #'hippie-expand)
 
 (map! "s-,"   #'toggle-frame-maximized
@@ -70,17 +62,13 @@
       "s-z"   #'split-window-3
       "s-w"   #'window-resizer
       "s-s"   #'save-buffer-without-hook
-      "C-o =" #'indent-and-clean-buffer
       "C-M-;" #'copy-region-and-comment-out
-      "C-o C-q" #'extract-purchase-amount-from-torihiki
-      "C-o C-w" #'extract-profit-from-torihiki
-      "C-o C-e" #'extract-torihiki-data
       "M-h"   #'backward-kill-word
       "C-x t" #'other-frame
       "s-f"   #'toggle-truncate-lines
-      "s-g"   #'display-fill-column-indicator-mode
+      "s-g"   #'display-fill-column-indicator-mode ; C-c t c
       "C-x m" #'kmacro-end-and-call-macro
-      "C-x C-n" #'toggle-display-line-numbers
+      "C-x C-n" #'toggle-display-line-numbers ; C-c t l
       "M-q"   #'quoted-insert
       "M-k"   #'kill-whole-line
       "C-x C-t" #'transpose-lines
@@ -89,13 +77,50 @@
       "M-n"   #'forward-paragraph
       "C-j"   #'smart-newline
       "C-M-j" #'+default/newline
-      "C-o f" #'helm-projectile-find-file ;;'helm-ls-git-ls)
-      "M-y"   #'helm-show-kill-ring
-      "C-o C-a" #'helm-do-ag-project-root
       "M-w"   #'easy-kill
       "C-x 1" #'zoom-window-zoom
-      "s-i"   #'origami-toggle-node
-      "s-."   #'lsp-find-definition)
+      "M-y"   #'helm-show-kill-ring
+      )
+
+;; C-o の既存割り当てを解除し、Prefix キーとして定義
+(map! :leader
+      :desc "My custom prefix" "o" nil) ; ※もし leader キー経由で使う予定がない場合は不要
+
+(map! :g "C-o" nil)
+
+(map! :prefix "C-o"
+      :desc "Search Cwd"       "a" #'+default/search-cwd
+      :desc "Search Project"       "C-a" #'+default/search-project
+      :desc "Search File"       "f" #'projectile-find-file
+      :desc "Anzu"   "r" #'anzu-query-replace-regexp
+      :desc "Anzu at Cursor"   "C-r" #'anzu-query-replace-at-cursor-thing
+      :desc "Indent and Clear Buffer" "=" #'indent-and-clean-buffer
+      :desc "Torihiki Purchase"   "C-q" #'extract-purchase-amount-from-torihiki
+      :desc "Torihiki Profit"   "C-w" #'extract-profit-from-torihiki
+      :desc "Torihiki Data"   "C-e" #'extract-torihiki-data)
+
+
+;; Doom 非 Evil の C-c リーダーへ、既存ツリーを壊さず不足分だけ足す
+;; プロジェクト検索は C-c s p / カレントは C-c s d。結果を編集するときは minibuffer で C-c C-e → C-c C-c
+(map! :leader
+      :desc "Dropbox junk file"      "n j" #'open-dropbox-junk
+      :desc "0sec memo"              "n m" #'open-0sec-memo
+      :desc "Book memo"              "n b" #'start-book-memo
+      :desc "Search junk dir"        "n g" #'my/consult-ripgrep-junk
+      :desc "Uncheck subtree"        "n u" #'my/org-uncheck-all-subtree
+      :desc "Anzu replace at point"  "s r" #'anzu-query-replace-at-cursor-thing
+      :desc "Highlight symbol"       "s h" #'highlight-symbol-at-point
+      :desc "Unhighlight"            "s u" #'unhighlight-regexp
+      :desc "Avy word"               "j j" #'avy-goto-word-1
+      :desc "Avy line"               "j l" #'avy-goto-line
+      :desc "Avy char"               "j c" #'avy-goto-char-timer
+      :desc "Avy line below"         "j n" #'avy-goto-line-below
+      :desc "Avy line above"         "j p" #'avy-goto-line-above
+      :desc "Indent and clean"       "c =" #'indent-and-clean-buffer
+      :desc "Yank file basename"     "f n" #'add-file-name-to-kill-ring
+      :desc "Purchase amount"        "x q" #'extract-purchase-amount-from-torihiki
+      :desc "Profit"                 "x w" #'extract-profit-from-torihiki
+      :desc "Torihiki TSV"           "x e" #'extract-torihiki-data)
 
 ;; (bind-key "M-t" 'custom-transpose-char)
 ;;(bind-key "C-1" 'replace-symbol-from-kill-ring)
@@ -155,22 +180,24 @@
 (use-package! smartrep
   :demand t
   :config
-  (map! "C-\\" nil)
-  (smartrep-define-key global-map "C-\\"
-    '(("C-\\" . 'mc/mark-next-like-this)
-      ("n"    . 'mc/mark-next-like-this)
-      ("p"    . 'mc/unmark-next-like-this)
-      ("P"    . 'mc/mark-previous-like-this)
-      ("N"    . 'mc/unmark-previous-like-this)
-      ("s"    . 'mc/skip-to-next-like-this)
-      ("S"    . 'mc/skip-to-previous-like-this)
-      ("m"    . 'mc/mark-more-like-this-extended)
-      ("*"    . 'mc/mark-all-like-this)
-      ("d"    . 'mc/mark-all-like-this-dwim)
-      ("i"    . 'my/mc/insert-numbers)
-      ("o"    . 'mc/sort-regions)
-      ("O"    . 'mc/reverse-regions))))
+  ;; 1. C-\ の既存割り当て（toggle-input-method 等）を解放
+  (global-unset-key (kbd "C-\\"))
 
+  ;; 2. C-\ をプレフィックスキーとして smartrep を定義
+  (smartrep-define-key global-map "C-\\"
+    '(("C-\\" . mc/mark-next-like-this)
+      ("n"    . mc/mark-next-like-this)
+      ("p"    . mc/unmark-next-like-this)
+      ("P"    . mc/mark-previous-like-this)
+      ("N"    . mc/unmark-previous-like-this)
+      ("s"    . mc/skip-to-next-like-this)
+      ("S"    . mc/skip-to-previous-like-this)
+      ("m"    . mc/mark-more-like-this-extended)
+      ("*"    . mc/mark-all-like-this)
+      ("d"    . mc/mark-all-like-this-dwim)
+      ("i"    . my/mc/insert-numbers)
+      ("o"    . mc/sort-regions)
+      ("O"    . mc/reverse-regions))))
 ;; ;; magit
 ;; (bind-key "s-g" 'magit-status)
 
@@ -207,9 +234,10 @@
 ;; ;; (bind-keys :map ac-menu-map
 ;; ;;            ("C-n" . ac-next)
 ;; ;;            ("C-p" . ac-previous))
-(after! web-mode
-  (map! :map web-mode-map
-        "C-o C-f" #'web-mode-fold-or-unfold))
+;; :editor fold (C-c C-f C-f) に移行
+;; (after! web-mode
+;;   (map! :map web-mode-map
+;;         "C-o C-f" #'web-mode-fold-or-unfold))
 ;; ;; (bind-keys :map ac-completing-map
 ;; ;;            ("M-/" . ac-stop))
 ;; ;; (bind-keys :map emacs-lisp-mode-map
@@ -242,32 +270,62 @@
 ;; ;; |M-|| 矩形を入力としてシェルコマンドを実行する。引数が指定されている場合はシェルコマンドの結果が矩形に埋まる
 ;; ;; |M-/| 矩形の正規表現にマッチする行をハイライト
 
-;; ;; C-u C-s isearch-regexp
+;; (after! company
+;;   (map! :map company-active-map
+;;         "C-h" nil
+;;         "M-h" #'company-show-doc-buffer))
 
-;; ;; helm-map
-;; ;; <C-M-down>      helm-scroll-other-window
-;; ;; <C-M-up>        helm-scroll-other-window-down
-;; ;; M-m             helm-toggle-all-marks
-;; ;; M-n             next-history-element
-;; ;; M-p             previous-history-element
-;; ;; C-s		Run Grep (C-u Recursive).
-;; ;; M-g a		Run AG grep on current directory.
-;; ;; M-g g		Run git-grep on current directory.
-;; ;; M-g i		Run gid (id-utils).
-;; ;; M-.		Run Etags (C-u use thing-at-point `C-u C-u' reload cache)
-;; ;; M-%		Query replace on marked files.
-;; ;; M-C		Copy File (C-u Follow).
-;; ;; C-]		Toggle basename/fullpath.
-;; ;; C-c C-y		Yank current selection into pattern.
-
-(after! company
-  (map! :map company-active-map
-        "C-o" nil
-        "C-h" nil
-        "M-h" #'company-show-doc-buffer))
+(after! corfu
+  (map! :map corfu-map
+        "C-h" nil))
+(map! "C-;" #'completion-at-point)
 
 (after! org
   (map! :map org-mode-map
         "S-M-RET" #'+org/insert-item-above
         "C-," nil
-        "C-o u" #'my/org-uncheck-all-subtree))
+        ;; "C-o u" #'my/org-uncheck-all-subtree ; C-c n u
+        ))
+
+;; 1. Vertico でのページ移動キーバインド & 2. ディレクトリ移動設定
+;; 検索プレビューは C-j。file 補完だけ従来どおりディレクトリ進入
+;; (after! consult
+;;   (consult-customize
+;;    consult-ripgrep consult-git-grep consult-grep
+;;    consult-bookmark consult-recent-file
+;;    consult--source-recent-file consult--source-project-recent-file
+;;    consult--source-bookmark
+;;    +default/search-project +default/search-other-project
+;;    +default/search-project-for-symbol-at-point
+;;    +default/search-cwd +default/search-other-cwd
+;;    +default/search-emacsd
+;;    :preview-key "C-j"))
+
+(after! consult
+  (consult-customize
+   consult-ripgrep consult-git-grep consult-grep
+   +default/search-project +default/search-other-project
+   +default/search-project-for-symbol-at-point
+   +default/search-cwd +default/search-other-cwd
+   +default/search-emacsd
+   my/consult-ripgrep-junk
+   :preview-key '(:debounce 0.2 any)))
+
+(after! vertico
+  (define-key vertico-map (kbd "C-v") #'vertico-scroll-up)
+  (define-key vertico-map (kbd "M-v") #'vertico-scroll-down)
+
+  ;; vertico-directory の読み込み (バックスペースで親ディレクトリへ)
+  (require 'vertico-directory)
+  (define-key vertico-map (kbd "C-l") #'vertico-directory-delete-char)
+  (define-key vertico-map (kbd "C-j")
+    (cmd! (when (eq 'file (vertico--metadata-get 'category))
+            (call-interactively #'vertico-directory-enter)))))
+
+(after! corfu
+  (define-key corfu-map (kbd "C-v") #'corfu-scroll-up)
+  (define-key corfu-map (kbd "M-v") #'corfu-scroll-down)
+
+  ;; 最初の候補 / 最後の候補へ一気にジャンプする（M-< / M->）
+  (define-key corfu-map (kbd "M-<") #'corfu-first)
+  (define-key corfu-map (kbd "M->") #'corfu-last))

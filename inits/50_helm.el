@@ -1,19 +1,8 @@
 ;;; -*- lexical-binding: t; -*-
+;; Helm は kill-ring 専用。:completion helm と helm-mode は使わない（Vertico を奪わない）。
 
-(after! helm
-  (setq helm-move-to-line-cycle-in-source nil
-        helm-M-x-fuzzy-match nil
-        helm-ff-fuzzy-matching t))
-
-(remove-hook 'doom-first-buffer-hook #'ws-butler-global-mode)
-
-(use-package! helm-swoop
+(use-package! helm
   :defer t
-  :config
-  (setq helm-swoop-split-window-function
-        (lambda (buf &rest _args)
-          (display-buffer
-           buf
-           '((display-buffer-reuse-window
-              display-buffer-at-bottom)
-             (window-height . 30))))))
+  :commands helm-show-kill-ring)
+
+(map! [remap yank-pop] #'helm-show-kill-ring)
