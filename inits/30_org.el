@@ -9,6 +9,22 @@
 (remove-hook 'text-mode-hook #'pangu-spacing-mode)
 (remove-hook 'text-mode-hook #'visual-line-mode)
 
+;; (after! org-persist
+;;   (defadvice! my/org-persist-read-gc-lock-alist-a (fn &optional buffer-or-file)
+;;     "Treat a non-alist org-persist gc-lock file as empty."
+;;     :around #'org-persist--read-elisp-file
+;;     (let ((data (funcall fn buffer-or-file)))
+;;       (if (and (stringp buffer-or-file)
+;;                (equal (file-name-nondirectory buffer-or-file)
+;;                       org-persist-gc-lock-file)
+;;                (not (and (proper-list-p data)
+;;                          (cl-every #'consp data))))
+;;           (progn
+;;             (message "org-persist: ignoring corrupt gc-lock %S" data)
+;;             (ignore-errors (delete-file buffer-or-file))
+;;             nil)
+;;         data))))
+
 (after! org
   (setq org-hide-emphasis-markers t
         org-log-done t

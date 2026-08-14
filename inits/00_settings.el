@@ -38,8 +38,65 @@
 (add-to-list 'safe-local-variable-values
              '(flycheck-emacs-lisp-load-path . inherit))
 
-(after! persp-mode
-  (setq persp-auto-save-num-of-backups 10))
+;; (defadvice! my/kill-emacs-hook-identify-a (orig hook)
+;;   "Name the failing `kill-emacs-hook' function in the quit prompt and a log file."
+;;   :around #'run-hook-query-error-with-timeout
+;;   (if (not (eq hook 'kill-emacs-hook))
+;;       (funcall orig hook)
+;;     (run-hook-wrapped
+;;      hook
+;;      (lambda (fun)
+;;        (condition-case err
+;;            (funcall fun)
+;;          (error
+;;           (let ((name (if (symbolp fun) fun 'lambda))
+;;                 (log (expand-file-name "kill-emacs-hook-error.log" doom-cache-dir)))
+;;             (with-temp-file log
+;;               (insert (format "FAILED: %S\nERROR: %S\nHOOKS: %S\n"
+;;                               name err kill-emacs-hook)))
+;;             (unless (y-or-n-p-with-timeout
+;;                      (format "Error in %s: %s; continue?" name err)
+;;                      5 t)
+;;               (signal (car err) (cdr err))))))
+;;        nil))))
+
+;; (after! persp-mode
+;;   (setq persp-auto-save-num-of-backups 10))
+
+;; (after! savehist
+;;   (defun my/savehist-take-proper (value)
+;;     "Return a proper-list prefix of VALUE, dropping a non-list tail."
+;;     (let (out)
+;;       (while (consp value)
+;;         (push (car value) out)
+;;         (setq value (cdr value)))
+;;       (when value
+;;         (message "savehist: dropped non-list tail %S" value))
+;;       (nreverse out)))
+
+;;   (add-hook! 'savehist-save-hook :depth -100
+;;     (defun my/savehist-sanitize-h ()
+;;       "Drop non-list savehist values so `savehist-save' cannot signal listp errors."
+;;       (unless (proper-list-p kill-ring)
+;;         (setq kill-ring
+;;               (cl-remove-if-not #'stringp (my/savehist-take-proper kill-ring))))
+;;       (when (boundp 'register-alist)
+;;         (setq register-alist
+;;               (cl-loop for elt in (my/savehist-take-proper register-alist)
+;;                        if (consp elt) collect elt
+;;                        else do (message "savehist: skip register entry %S" elt))))
+;;       (setq savehist-additional-variables
+;;             (my/savehist-take-proper savehist-additional-variables))
+;;       (setq savehist-minibuffer-history-variables
+;;             (cl-loop for sym in (my/savehist-take-proper
+;;                                  savehist-minibuffer-history-variables)
+;;                      if (not (symbolp sym))
+;;                      do (message "savehist: skip non-symbol %S" sym)
+;;                      else if (or (not (boundp sym))
+;;                                  (proper-list-p (symbol-value sym)))
+;;                      collect sym
+;;                      else do (message "savehist: skip %S (value %S)"
+;;                                       sym (symbol-value sym)))))))
 
 (after! recentf
   (setq recentf-max-menu-items 500))
