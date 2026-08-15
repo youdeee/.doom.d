@@ -56,7 +56,8 @@
   '(mode-line :background "#464646")
   '(mode-line-inactive :background "#2e2e2e")
   '(hl-line :underline "SteelBlue4")
-  '(doom-modeline-buffer-modified :background "#da1001"))
+  '(doom-modeline-buffer-modified :background "#da1001")
+  `(corfu-current :background ,(face-background 'region nil t) :extend t))
 
 (after! hl-todo
   (setq hl-todo-keyword-faces

@@ -21,7 +21,7 @@
  ;; If there is more than one, they won't work right.
  '(doom-modeline-buffer-modified ((t (:background "#da1001"))))
  '(hl-line ((t (:underline "SteelBlue4"))))
- '(mode-line ((t (:background "#464646"))))
+ '(mode-line ((t (:background "#476375"))))
  '(mode-line-inactive ((t (:background "#2e2e2e"))))
  '(org-date ((t (:foreground "#746e5b" :weight bold :height 1.0))))
  '(org-headline-done ((((class color) (min-colors 16) (background dark)) (:foreground "#baa76e"))))

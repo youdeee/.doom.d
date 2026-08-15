@@ -14,9 +14,7 @@
 ;; C-M系
 ;; i インデント削除
 
-
-;; 自作関数
-;; C-c リーダーに一本化したため無効化（C-o は open-line に戻す）
+(map! :g "C-z" nil)
 (map! :map override
       "C-t"     #'move-window
       "C-M-t"   #'move-window-opposite
@@ -45,11 +43,9 @@
       "C-x f"   #'consult-buffer
       "M-o"     #'consult-line
       "M-O"     (cmd!! #'consult-line-multi 'all-buffers)
-      ;; "C-;"     #'avy-goto-word-1 ; avy は C-c j j
-      ;; (bind-key* "C-;" 'avy-goto-char)
-      ;; (bind-key* "C-\"" 'avy-goto-char-2)
-      "C-\""     #'avy-goto-line ; imenu。avy は C-c j l
-      "C-:"     #'ace-window
+      "C-;"     #'avy-goto-word-1 ; avy は C-c j j
+      "C-:"     #'avy-goto-line ; imenu。avy は C-c j l
+      "C-z"     #'ace-window
       "C-x C-z" #'open-dropbox-junk ; C-c n j
       "M-/"     #'hippie-expand)
 
@@ -109,8 +105,8 @@
       :desc "Search junk dir"        "n g" #'my/consult-ripgrep-junk
       :desc "Uncheck subtree"        "n u" #'my/org-uncheck-all-subtree
       :desc "Anzu replace at point"  "s r" #'anzu-query-replace-at-cursor-thing
-      :desc "Highlight symbol"       "s h" #'highlight-symbol-at-point
-      :desc "Unhighlight"            "s u" #'unhighlight-regexp
+      :desc "Highlight symbol"       "h h" #'highlight-symbol-at-point
+      :desc "Unhighlight"            "h u" #'unhighlight-regexp
       :desc "Avy word"               "j j" #'avy-goto-word-1
       :desc "Avy line"               "j l" #'avy-goto-line
       :desc "Avy char"               "j c" #'avy-goto-char-timer
@@ -323,6 +319,7 @@
             (call-interactively #'vertico-directory-enter)))))
 
 (after! corfu
+  (define-key corfu-map (kbd "C-m") #'corfu-insert)
   (define-key corfu-map (kbd "C-v") #'corfu-scroll-up)
   (define-key corfu-map (kbd "M-v") #'corfu-scroll-down)
 
