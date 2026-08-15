@@ -101,6 +101,22 @@
 (after! recentf
   (setq recentf-max-menu-items 500))
 
+(defvar my/savehist-kill-ring-max-chars 2000
+  "savehist に保存する kill-ring 要素の最大文字数。
+これを超える要素（巨大な誤コピーや警告メッセージなど）は保存対象からのみ
+除外する。実行中セッションの kill-ring 自体はそのまま。")
+
+(defun my/savehist-trim-kill-ring-for-save-h ()
+  "savehist 保存直前だけ、長すぎる kill-ring 要素を間引く。
+doom-savehist-unpropertize-variables-h（文字列化）の後に走らせるため
+depth 90 で登録する。"
+  (setq-local kill-ring
+              (seq-filter (lambda (s) (<= (length s) my/savehist-kill-ring-max-chars))
+                           kill-ring)))
+
+(after! savehist
+  (add-hook 'savehist-save-hook #'my/savehist-trim-kill-ring-for-save-h 90))
+
 (remove-hook 'doom-first-buffer-hook #'ws-butler-global-mode)
 
 ;; FVM のパスを Emacs の exec-path と PATH に追加（~ は展開しないと素通りする）
