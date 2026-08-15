@@ -64,6 +64,9 @@
 ;; (package! switch-window) ; :ui window-select (ace-window) に移行
 (package! zoom-window)
 ;; (package! hl-todo) ; :ui hl-todo に移行
-(package! csv-mode)
+;; (package! csv-mode) ; :lang data に移行
 ;; (package! origami) ; :editor fold (C-c C-f C-f) に移行
 ;; (package! rainbow-mode) ; :lang web が css-mode-hook で有効化
+
+(package! denote)
+(package! consult-denote)

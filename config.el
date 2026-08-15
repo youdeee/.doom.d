@@ -94,6 +94,7 @@
 (load! "inits/30_anzu")
 (load! "inits/30_multiple-cursors")
 (load! "inits/30_org")
+(load! "inits/35_denote")
 (load! "inits/40_open-junk-file")
 (load! "inits/50_helm") ; helm-show-kill-ring のみ。helm-mode は使わない
 (load! "inits/70_lsp")
