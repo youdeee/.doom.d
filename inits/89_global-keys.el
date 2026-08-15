@@ -75,6 +75,7 @@
       "C-M-j" #'+default/newline
       "M-w"   #'easy-kill
       "C-x 1" #'zoom-window-zoom
+      "C-x b" #'my/consult-ripgrep-junk
       ;; M-y は [remap yank-pop] (inits/50_helm.el) で helm-show-kill-ring
       )
 
@@ -102,7 +103,7 @@
       :desc "Dropbox junk file"      "n j" #'open-dropbox-junk
       :desc "0sec memo"              "n m" #'open-0sec-memo
       :desc "Book memo"              "n b" #'start-book-memo
-      :desc "Search junk dir"        "n g" #'my/consult-ripgrep-junk
+      :desc "Search junk dir"        "s j" #'my/consult-ripgrep-junk
       :desc "Uncheck subtree"        "n u" #'my/org-uncheck-all-subtree
       :desc "Denote: new note"       "n d n" #'denote
       :desc "Denote: link"           "n d l" #'denote-link

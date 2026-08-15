@@ -102,3 +102,8 @@
   (setq recentf-max-menu-items 500))
 
 (remove-hook 'doom-first-buffer-hook #'ws-butler-global-mode)
+
+;; FVM のパスを Emacs の exec-path と PATH に追加（~ は展開しないと素通りする）
+(let ((fvm-bin (expand-file-name "~/fvm/default/bin")))
+  (add-to-list 'exec-path fvm-bin)
+  (setenv "PATH" (concat fvm-bin ":" (getenv "PATH"))))

@@ -53,7 +53,7 @@
     '(aw-leading-char-face :weight bold :height 2.0)))
 
 (custom-set-faces!
-  '(mode-line :background "#464646")
+  '(mode-line :background "#476375")
   '(mode-line-inactive :background "#2e2e2e")
   '(hl-line :underline "SteelBlue4")
   '(doom-modeline-buffer-modified :background "#da1001")
@@ -81,3 +81,6 @@
           ("XXX" . "#cc9393")
           ("XXXX" . "#cc9393")
           ("???" . "#cc9393"))))
+
+(after! corfu
+  (setq corfu-preselect 'first))
