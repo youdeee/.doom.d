@@ -4,7 +4,6 @@
       css-indent-offset 2
       js-indent-level 2
       typescript-indent-level 2
-      gc-cons-threshold (* 100 1024 1024)
       read-process-output-max (* 1024 1024))
 
 (after! js2-mode

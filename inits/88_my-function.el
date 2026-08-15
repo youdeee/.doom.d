@@ -33,10 +33,11 @@
 
 (defun kill-all-line-forward (arg)
   (interactive "p")
-  (save-excursion
-    (forward-page)
-    (setq end-number (point)))
-  (kill-line (- (- end-number (line-number-at-pos)) arg)))
+  (let (end-number)
+    (save-excursion
+      (forward-page)
+      (setq end-number (point)))
+    (kill-line (- (- end-number (line-number-at-pos)) arg))))
 
 (defun kill-all-line-backward (arg)
   (interactive "p")
@@ -150,12 +151,6 @@
               (t
                (message "Quit")
                (throw 'end-flag t)))))))
-
-(defun save-buffer-without-hook ()
-  (interactive)
-  (setq exec-hook nil)
-  (save-buffer)
-  (setq exec-hook t))
 
 (defun start-book-memo (title)
   (interactive "sInput book title: ")

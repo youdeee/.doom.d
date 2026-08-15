@@ -1,7 +1,7 @@
 ;;; -*- lexical-binding: t; -*-
 
 (setq frame-title-format (format "%%f @%s" (system-name))
-      indent-line-function #'indent-relative-maybe
+      indent-line-function #'indent-relative-first-indent-point
       hippie-expand-try-functions-list
       '(try-expand-all-abbrevs
         try-expand-dabbrev
@@ -58,6 +58,13 @@
   '(hl-line :underline "SteelBlue4")
   '(doom-modeline-buffer-modified :background "#da1001")
   `(corfu-current :background ,(face-background 'region nil t) :extend t))
+
+;; dape 同梱の flutter 設定は modes が dart-mode のみ。:lang dart +tree-sitter で
+;; 実際に開かれるのは dart-ts-mode なので対象に加える。
+(after! dape
+  (let ((flutter-config (alist-get 'flutter dape-configs)))
+    (when flutter-config
+      (plist-put flutter-config 'modes '(dart-mode dart-ts-mode)))))
 
 (after! hl-todo
   (setq hl-todo-keyword-faces

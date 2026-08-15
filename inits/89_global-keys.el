@@ -57,7 +57,7 @@
       ;;(bind-key "C-x a k" 'kill-all-buffer)
       "s-z"   #'split-window-3
       "s-w"   #'window-resizer
-      "s-s"   #'save-buffer-without-hook
+      "s-s"   #'save-buffer
       "C-M-;" #'copy-region-and-comment-out
       "M-h"   #'backward-kill-word
       "C-x t" #'other-frame
@@ -75,7 +75,7 @@
       "C-M-j" #'+default/newline
       "M-w"   #'easy-kill
       "C-x 1" #'zoom-window-zoom
-      "M-y"   #'helm-show-kill-ring
+      ;; M-y は [remap yank-pop] (inits/50_helm.el) で helm-show-kill-ring
       )
 
 ;; C-o の既存割り当てを解除し、Prefix キーとして定義
@@ -104,6 +104,10 @@
       :desc "Book memo"              "n b" #'start-book-memo
       :desc "Search junk dir"        "n g" #'my/consult-ripgrep-junk
       :desc "Uncheck subtree"        "n u" #'my/org-uncheck-all-subtree
+      :desc "Denote: new note"       "n d n" #'denote
+      :desc "Denote: link"           "n d l" #'denote-link
+      :desc "Denote: find"           "n d f" #'consult-denote-find
+      :desc "Denote: grep"           "n d g" #'consult-denote-grep
       :desc "Anzu replace at point"  "s r" #'anzu-query-replace-at-cursor-thing
       :desc "Highlight symbol"       "h h" #'highlight-symbol-at-point
       :desc "Unhighlight"            "h u" #'unhighlight-regexp
@@ -191,7 +195,7 @@
       ("m"    . mc/mark-more-like-this-extended)
       ("*"    . mc/mark-all-like-this)
       ("d"    . mc/mark-all-like-this-dwim)
-      ("i"    . my/mc/insert-numbers)
+      ("i"    . mc/insert-numbers)
       ("o"    . mc/sort-regions)
       ("O"    . mc/reverse-regions))))
 ;; ;; magit
@@ -243,12 +247,13 @@
 ;; ;;            ("C-;" . avy-migemo-isearch))
 
 
-;; (eval-after-load "emmet-mode"
-;;   '(progn
-;;      (define-key emmet-mode-keymap (kbd "C-j") nil)
-;;      (define-key emmet-mode-keymap (kbd "TAB") nil)
-;;      (define-key emmet-mode-keymap (kbd "<tab>") nil)
-;;      (define-key emmet-mode-keymap (kbd "s-j") 'emmet-expand-line)))
+;; C-j は smart-newline に取られているため emmet 側から外す。展開は s-j へ。
+(after! emmet-mode
+  (map! :map emmet-mode-keymap
+        "C-j"   nil
+        "TAB"   nil
+        "<tab>" nil
+        "s-j"   #'emmet-expand-line))
 
 ;; ;; (require 'thingopt)
 ;; ;; (define-thing-commands)
@@ -274,7 +279,7 @@
 (after! corfu
   (map! :map corfu-map
         "C-h" nil))
-(map! "C-;" #'completion-at-point)
+;; C-; は override の avy-goto-word-1（46 行目）を維持。補完は TAB / M-/ で足りる。
 
 (after! org
   (map! :map org-mode-map

@@ -85,9 +85,10 @@
 ;; (setq native-comp-async-report-warnings-errors nil) ;; 警告を黙らせる
 ;; (setq native-comp-deferred-compilation t)           ;; バックグラウンドでコンパイル
 
-;; FVM のパスを Emacs の exec-path と PATH に追加
-(add-to-list 'exec-path "~/fvm/default/bin")
-(setenv "PATH" (concat "~/fvm/default/bin:" (getenv "PATH")))
+;; FVM のパスを Emacs の exec-path と PATH に追加（~ は展開しないと素通りする）
+(let ((fvm-bin (expand-file-name "~/fvm/default/bin")))
+  (add-to-list 'exec-path fvm-bin)
+  (setenv "PATH" (concat fvm-bin ":" (getenv "PATH"))))
 
 (load! "inits/00_settings")
 (load! "inits/30_anzu")
