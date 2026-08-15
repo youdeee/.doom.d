@@ -117,6 +117,17 @@ depth 90 で登録する。"
 (after! savehist
   (add-hook 'savehist-save-hook #'my/savehist-trim-kill-ring-for-save-h 90))
 
+;; Rails+Vite の frontend/ や Elixir umbrella の apps/*/ のように、実際の
+;; 言語プロジェクトルート（package.json/mix.exs）が git ルートより深い場所
+;; にあるモノレポ構成で、Eglot（project-current 経由 → project-projectile）
+;; が bottom-up 探索で先に見つかる .git を拾ってしまい、typescript-language-server
+;; が node_modules を見つけられず初期化に失敗する等の問題への対処。
+;; package.json/mix.exs も bottom-up 側のマーカーに加え、.git より近い方を
+;; 優先させる。
+(after! projectile
+  (setq projectile-project-root-files-bottom-up
+        (append '("package.json" "mix.exs") projectile-project-root-files-bottom-up)))
+
 (remove-hook 'doom-first-buffer-hook #'ws-butler-global-mode)
 
 ;; FVM のパスを Emacs の exec-path と PATH に追加（~ は展開しないと素通りする）

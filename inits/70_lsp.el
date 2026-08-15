@@ -20,3 +20,7 @@
   (setq eglot-autoshutdown t
         eglot-report-progress nil)
   (add-hook 'eglot-managed-mode-hook #'my/eglot-setup-yasnippet-capf 10))
+
+(after! eglot
+  (add-to-list 'eglot-server-programs
+               '((elixir-mode heex-mode elixir-ts-mode) . ("~/workspace/elixir-ls-v0.29.2/language_server.sh"))))
